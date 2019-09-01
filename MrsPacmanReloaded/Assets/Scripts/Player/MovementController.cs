@@ -14,6 +14,7 @@ public class MovementController : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = targetFPS;
+        StartCoroutine("Movement");
     }
 
     // Update is called once per frame
@@ -36,17 +37,31 @@ public class MovementController : MonoBehaviour
         if (CheckCollision(new Vector2(0, currentDir.y)))
             currentDir.y = 0;
 
-        transform.Translate(currentDir * speedMult * Time.deltaTime);
+        //transform.Translate(currentDir * speedMult * Time.deltaTime);
     }
 
     private bool CheckCollision(Vector2 dir)
     {
-        Debug.Log(dir);
 
         RaycastHit2D hit = Physics2D.BoxCast(transform.position, new Vector2(0.9f, 0.9f), 0, dir, 0.1f);//Physics2D.Raycast(transform.position, dir, 0.5f);
         if (hit)
             return true;
 
         return false;
+    }
+
+    IEnumerator Movement()
+    {
+        Vector2 currentPos = transform.position;
+        float timer = 0;
+        float speed = 0.25f;
+        var myDir = currentDir;
+        while(timer < speed)
+        {
+            timer += Time.deltaTime;
+            transform.position = Vector2.Lerp(currentPos, currentPos + myDir, timer / speed);
+            yield return null;
+        }
+        StartCoroutine("Movement");
     }
 }
