@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class MovementController : MonoBehaviour
 {
-
-    [SerializeField] private float speedMult = 60;
     [SerializeField] private int targetFPS = 60;
+    [SerializeField] private float speed = 0.25f;
 
     private Vector2 currentDir;
 
@@ -14,7 +13,7 @@ public class MovementController : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = targetFPS;
-        StartCoroutine("Movement");
+        //StartCoroutine("Movement");
     }
 
     // Update is called once per frame
@@ -37,7 +36,24 @@ public class MovementController : MonoBehaviour
         if (CheckCollision(new Vector2(0, currentDir.y)))
             currentDir.y = 0;
 
-        //transform.Translate(currentDir * speedMult * Time.deltaTime);
+        if(Tweener._Instance.AddTween(transform, transform.position, transform.position + new Vector3(currentDir.x, currentDir.y, 0), speed))
+        {
+            transform.right = currentDir;
+        }
+
+        if (transform.position.x <= -0.5f)
+        {
+            transform.position = new Vector3(Grid.instance.GridWorldSize.x - 1, transform.position.y);
+            Tweener._Instance.CancelTween(transform);
+            Tweener._Instance.AddTween(transform, transform.position, transform.position + new Vector3(currentDir.x, currentDir.y, 0), speed);
+        }
+
+        if (transform.position.x >= Grid.instance.GridWorldSize.x - 0.5f)
+        {
+            transform.position = new Vector3(0, transform.position.y);
+            Tweener._Instance.CancelTween(transform);
+            Tweener._Instance.AddTween(transform, transform.position, transform.position + new Vector3(currentDir.x, currentDir.y, 0), speed);
+        }
     }
 
     private bool CheckCollision(Vector2 dir)
@@ -48,20 +64,5 @@ public class MovementController : MonoBehaviour
             return true;
 
         return false;
-    }
-
-    IEnumerator Movement()
-    {
-        Vector2 currentPos = transform.position;
-        float timer = 0;
-        float speed = 0.25f;
-        var myDir = currentDir;
-        while(timer < speed)
-        {
-            timer += Time.deltaTime;
-            transform.position = Vector2.Lerp(currentPos, currentPos + myDir, timer / speed);
-            yield return null;
-        }
-        StartCoroutine("Movement");
     }
 }
