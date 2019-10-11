@@ -11,10 +11,10 @@ public class PinkGhost : GhostAI
     public override void Start()
     {
         base.Start();
-        nodes[0] = GetFirstEmptyNodeInArea(new Vector3(Grid.instance.GridWorldSize.x, Grid.instance.GridWorldSize.y, 0), 3);
-        nodes[1] = GetFirstEmptyNodeInArea(new Vector3(Grid.instance.GridWorldSize.x, 0, 0), 3);
+        nodes[0] = GetFirstEmptyNodeInArea(new Vector3(Grid.Instance.GridWorldSize.x, Grid.Instance.GridWorldSize.y, 0), 3);
+        nodes[1] = GetFirstEmptyNodeInArea(new Vector3(Grid.Instance.GridWorldSize.x, 0, 0), 3);
         nodes[2] = GetFirstEmptyNodeInArea(new Vector3(0, 0, 0), 3);
-        nodes[3] = GetFirstEmptyNodeInArea(new Vector3(0, Grid.instance.GridWorldSize.y, 0), 3);
+        nodes[3] = GetFirstEmptyNodeInArea(new Vector3(0, Grid.Instance.GridWorldSize.y, 0), 3);
         seeker.targetPos = nodes[currentlySelectedNode].position;
 
     }
@@ -23,6 +23,9 @@ public class PinkGhost : GhostAI
     public override void Update()
     {
         base.Update();
+        if (!GameManager.GameStarted)
+            return;
+
         if (haywire || !isAlive)
             return;
 
@@ -39,6 +42,6 @@ public class PinkGhost : GhostAI
             seeker.targetPos = nodes[currentlySelectedNode].position;
         }
         if(pathfinding.path.Count > 0)
-            Tweener._Instance.AddTween(transform, transform.position, pathfinding.path[0].position, speed);
+            Tweener.Instance.AddTween(transform, transform.position, pathfinding.path[0].position, speed);
     }
 }

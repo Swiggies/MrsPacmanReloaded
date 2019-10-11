@@ -6,6 +6,7 @@ public class BlueGhost : GhostAI
 {
     private float cooldown;
     private int distance = 5;
+    Vector2 currentDir;
 
     // Start is called before the first frame update
     public override void Start()
@@ -17,6 +18,9 @@ public class BlueGhost : GhostAI
     public override void Update()
     {
         base.Update();
+        if (!GameManager.GameStarted)
+            return;
+
         if (haywire || !isAlive)
             return;
 
@@ -27,21 +31,28 @@ public class BlueGhost : GhostAI
         else
             cooldown += Time.deltaTime;
 
+        if (pathfinding.path.Count > 0)
+        {
+            currentDir = (pathfinding.path[0].position - transform.position).normalized;
+            Debug.DrawRay(transform.position, currentDir);
+            RaycastHit2D newHit = Physics2D.Raycast(transform.position, currentDir);
+            if (newHit != false)
+            {
+                if (newHit.collider.CompareTag("Player") && newHit.distance <= distance)
+                    GetNewPosition();
+            }
+        }
 
         if (Vector2.Distance(seeker.targetPos, player.position) <= distance)
         {
             GetNewPosition();
         }
 
-        if (Vector2.Distance(transform.position, player.position) <= distance)
-        {
-            GetNewPosition();
-        }
-        if (!Grid.instance.NodeFromWorldPosition(seeker.targetPos).NotWall)
+        if (!Grid.Instance.NodeFromWorldPosition(seeker.targetPos).NotWall)
             GetNewPosition();
 
         if (pathfinding.path.Count > 0)
-            Tweener._Instance.AddTween(transform, transform.position, pathfinding.path[0].position, speed);
+            Tweener.Instance.AddTween(transform, transform.position, pathfinding.path[0].position, speed);
         else
             GetNewPosition();
     }
@@ -50,6 +61,6 @@ public class BlueGhost : GhostAI
     {
         cooldown = 0;
         distance = 0;
-        seeker.targetPos = GetRandomNodeInArea(Vector3.zero, (int)Grid.instance.GridWorldSize.x, (int)Grid.instance.GridWorldSize.y).position;
+        seeker.targetPos = GetRandomNodeInArea(Vector3.zero, (int)Grid.Instance.GridWorldSize.x, (int)Grid.Instance.GridWorldSize.y).position;
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
-    public static Grid instance;
+    public static Grid Instance;
 
     public Transform StartPos;
     public LayerMask WallMask;
@@ -20,19 +20,13 @@ public class Grid : MonoBehaviour
 
     void Awake()
     {
-        instance = this;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
+        Instance = this;
         nodeDiamater = NodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(GridWorldSize.x / nodeDiamater);
         gridSizeY = Mathf.RoundToInt(GridWorldSize.y / nodeDiamater);
-        CreateGrid();
     }
 
-    void CreateGrid()
+    public void CreateGrid()
     {
         grid = new Node[gridSizeX, gridSizeY];  
         Vector3 bottomLeft = transform.position - (Vector3.right * GridWorldSize.x / 2) - (Vector3.up * GridWorldSize.y / 2);
@@ -50,6 +44,7 @@ public class Grid : MonoBehaviour
                 grid[x, y] = new Node(NotWall, worldPoint, x, y);
             }
         }
+        Debug.Log("Grid Created");
     }
 
     public Node NodeFromWorldPosition(Vector3 worldPos)

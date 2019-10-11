@@ -12,6 +12,7 @@ TextureImporter:
     21300014: Death5
     21300016: Death6
     21300018: Death7
+    21300020: Clear
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -289,6 +290,26 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 500f9d0bfe0671a4bac57c3a2fa63f0a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clear
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 450f5638db4cebc41bf29d4719cf1d90
       vertices: []
       indices: 
       edges: []

@@ -25,15 +25,25 @@ public class GhostAI : MonoBehaviour
     {
         startPos = transform.position;
         pathfinding = GetComponent<Pathfinding>();
-        pathfinding.grid = Grid.instance;
+        pathfinding.grid = Grid.Instance;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         defaultColor = GetComponent<SpriteRenderer>().color;
 
         Haywire.OnHaywire += OnHaywire;
+        GameManager.OnGameRestart += OnGameRestart;
+    }
+
+    private void OnGameRestart(GameManager.GameStates state)
+    {
+        Tweener.Instance.CancelTween(transform);
+        StopHaywire();
+        pathfinding.path.Clear();
+        transform.position = startPos;
     }
 
     private void OnHaywire()
     {
+        Tweener.Instance.CancelTween(transform);
         Debug.Log("OnHaywire");
         haywire = true;
         haywireTimer = 10;
@@ -50,13 +60,13 @@ public class GhostAI : MonoBehaviour
         if (haywire)
         {
             haywireTimer -= Time.deltaTime;
-            if(haywireTimer <= 0)
+            if (haywireTimer <= 0)
             {
                 StopHaywire();
             }
-            seeker.targetPos = GetRandomNodeInArea(Vector3.zero, (int)Grid.instance.GridWorldSize.x, (int)Grid.instance.GridWorldSize.y).position;
+            seeker.targetPos = GetRandomNodeInArea(Vector3.zero, (int)Grid.Instance.GridWorldSize.x, (int)Grid.Instance.GridWorldSize.y).position;
             if (pathfinding.path.Count > 0)
-                Tweener._Instance.AddTween(transform, transform.position, pathfinding.path[0].position, 0.25f);
+                Tweener.Instance.AddTween(transform, transform.position, pathfinding.path[0].position, 0.25f);
             return;
         }
     }
@@ -66,6 +76,7 @@ public class GhostAI : MonoBehaviour
         if(!haywire && col.CompareTag("Player"))
         {
             // kill player
+            col.GetComponent<PlayerController>().KillPlayer();
             Debug.Log($"Player is dead");
         }
         else if (haywire && col.CompareTag("Player"))
@@ -74,6 +85,7 @@ public class GhostAI : MonoBehaviour
             Debug.Log($"{gameObject.name} is dead");
             if (isAlive)
             {
+                GetComponent<CircleCollider2D>().enabled = false;
                 GetComponent<AudioSource>().Play();
                 transform.localScale = Vector3.one * 0.5f;
                 isAlive = false;
@@ -93,12 +105,13 @@ public class GhostAI : MonoBehaviour
     {
         seeker.targetPos = startPos;
         if (pathfinding.path.Count > 0)
-            Tweener._Instance.AddTween(transform, transform.position, pathfinding.path[0].position, 0.05f);
+            Tweener.Instance.AddTween(transform, transform.position, pathfinding.path[0].position, 0.05f);
 
         if (Vector2.Distance(transform.position, startPos) < 0.05f)
         {
             transform.localScale = Vector3.one;
             isAlive = true;
+            GetComponent<CircleCollider2D>().enabled = true;
             StopHaywire();
         }
     }
@@ -109,7 +122,7 @@ public class GhostAI : MonoBehaviour
         {
             for (int y = -size; y < size; y++)
             {
-                var node = Grid.instance.NodeFromWorldPosition(pos + new Vector3(x, y));
+                var node = Grid.Instance.NodeFromWorldPosition(pos + new Vector3(x, y));
                 if (node.NotWall)
                     return node;
                 else
@@ -123,7 +136,7 @@ public class GhostAI : MonoBehaviour
     {
         Vector3 randomPos = pos + new Vector3(Random.Range(0, xSize), Random.Range(0, ySize));
         Node node;
-            node = Grid.instance.NodeFromWorldPosition(randomPos);
+            node = Grid.Instance.NodeFromWorldPosition(randomPos);
         return node;
     }
 }

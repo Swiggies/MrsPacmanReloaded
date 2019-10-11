@@ -16,11 +16,14 @@ public class RedGhost : GhostAI
     public override void Update()
     {
         base.Update();
+        if (!GameManager.GameStarted)
+            return;
+
         if (haywire || !isAlive)
             return;
 
         seeker.targetPos = player.transform.position;
         if (pathfinding.path.Count > 0)
-            Tweener._Instance.AddTween(transform, transform.position, pathfinding.path[0].position, speed);
+            Tweener.Instance.AddTween(transform, transform.position, pathfinding.path[0].position, speed);
     }
 }

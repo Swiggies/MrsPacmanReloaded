@@ -9,13 +9,16 @@ public class GreenGhost : GhostAI
     public override void Start()
     {
         base.Start();
-        seeker.targetPos = GetRandomNodeInArea(Vector3.zero, (int)Grid.instance.GridWorldSize.x, (int)Grid.instance.GridWorldSize.y).position;
+        seeker.targetPos = GetRandomNodeInArea(Vector3.zero, (int)Grid.Instance.GridWorldSize.x, (int)Grid.Instance.GridWorldSize.y).position;
     }
 
     // Update is called once per frame
     public override void Update()
     {
         base.Update();
+        if (!GameManager.GameStarted)
+            return;
+
         if (haywire || !isAlive)
             return;
 
@@ -26,10 +29,10 @@ public class GreenGhost : GhostAI
         RaycastHit2D newHit = Physics2D.Raycast(transform.position, newDir, 1.5f);
         if (newHit || newDir == Vector2.zero)
         {
-            seeker.targetPos = GetRandomNodeInArea(Vector3.zero, (int)Grid.instance.GridWorldSize.x, (int)Grid.instance.GridWorldSize.y).position;
+            seeker.targetPos = GetRandomNodeInArea(Vector3.zero, (int)Grid.Instance.GridWorldSize.x, (int)Grid.Instance.GridWorldSize.y).position;
         }
 
         if (pathfinding.path.Count > 0)
-            Tweener._Instance.AddTween(transform, transform.position, pathfinding.path[0].position, speed);
+            Tweener.Instance.AddTween(transform, transform.position, pathfinding.path[0].position, speed);
     }
 }

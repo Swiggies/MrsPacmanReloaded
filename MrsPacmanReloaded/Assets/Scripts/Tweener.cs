@@ -1,22 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Tweener : MonoBehaviour
 {
     //private Tween activeTween;
     private List<Tween> activeTweens = new List<Tween>();
-    public static Tweener _Instance;     
+    public static Tweener Instance;     
 
     void Awake()
     {
-        _Instance = this;
+        Instance = this;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        SceneManager.sceneLoaded += OnNewScene;
+    }
+
+    private void OnNewScene(Scene arg0, LoadSceneMode arg1)
+    {
+        activeTweens.Clear();
     }
 
 

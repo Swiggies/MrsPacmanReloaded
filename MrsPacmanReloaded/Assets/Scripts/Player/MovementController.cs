@@ -7,18 +7,29 @@ public class MovementController : MonoBehaviour
     [SerializeField] private int targetFPS = 60;
     [SerializeField] private float speed = 0.25f;
 
+    private PlayerController playerController;
     private Vector2 currentDir;
 
     // Start is called before the first frame update
     void Start()
     {
         Application.targetFrameRate = targetFPS;
+        playerController = GetComponent<PlayerController>();
         //StartCoroutine("Movement");
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!GameManager.GameStarted)
+            return;
+
+        if (playerController.IsDead)
+        {
+            Tweener.Instance.CancelTween(transform);
+            return;
+        }
+
         if(Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0){
             float inputX = Input.GetAxisRaw("Horizontal");
             float inputY = Input.GetAxisRaw("Vertical");
@@ -36,23 +47,23 @@ public class MovementController : MonoBehaviour
         if (CheckCollision(new Vector2(0, currentDir.y)))
             currentDir.y = 0;
 
-        if(Tweener._Instance.AddTween(transform, transform.position, transform.position + new Vector3(currentDir.x, currentDir.y, 0), speed))
+        if(Tweener.Instance.AddTween(transform, transform.position, transform.position + new Vector3(currentDir.x, currentDir.y, 0), speed))
         {
             transform.right = currentDir;
         }
 
         if (transform.position.x <= -0.5f)
         {
-            transform.position = new Vector3(Grid.instance.GridWorldSize.x - 1, transform.position.y);
-            Tweener._Instance.CancelTween(transform);
-            Tweener._Instance.AddTween(transform, transform.position, transform.position + new Vector3(currentDir.x, currentDir.y, 0), speed);
+            transform.position = new Vector3(Grid.Instance.GridWorldSize.x - 1, transform.position.y);
+            Tweener.Instance.CancelTween(transform);
+            Tweener.Instance.AddTween(transform, transform.position, transform.position + new Vector3(currentDir.x, currentDir.y, 0), speed);
         }
 
-        if (transform.position.x >= Grid.instance.GridWorldSize.x - 0.5f)
+        if (transform.position.x >= Grid.Instance.GridWorldSize.x - 0.5f)
         {
             transform.position = new Vector3(0, transform.position.y);
-            Tweener._Instance.CancelTween(transform);
-            Tweener._Instance.AddTween(transform, transform.position, transform.position + new Vector3(currentDir.x, currentDir.y, 0), speed);
+            Tweener.Instance.CancelTween(transform);
+            Tweener.Instance.AddTween(transform, transform.position, transform.position + new Vector3(currentDir.x, currentDir.y, 0), speed);
         }
     }
 
