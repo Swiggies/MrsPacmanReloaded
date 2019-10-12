@@ -9,6 +9,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] private TextMeshProUGUI livesText;
+    [SerializeField] private TextMeshProUGUI powerupText;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +17,15 @@ public class UIController : MonoBehaviour
         GameManager.OnScoreChange += OnScoreChange;
         highScoreText.text = PlayerPrefs.GetInt(GameManager.HighScoreKey).ToString("D7");
         GameManager.OnGameRestart += OnGameRestart;
+
+        if(GameManager.IterateLevel)
+            Collectable.OnCollectablePickup += OnPowerupPickup;
+    }
+
+    private void OnPowerupPickup(Collectable collectable)
+    {
+        if (collectable.CollectableType == Collectable.CollectableTypes.Powerup)
+            powerupText.text = collectable.SelectedPowerup.PowerupName.ToUpper();
     }
 
     private void OnGameRestart(GameManager.GameStates state)

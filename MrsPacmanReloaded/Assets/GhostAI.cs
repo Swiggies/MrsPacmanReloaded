@@ -43,7 +43,6 @@ public class GhostAI : MonoBehaviour
 
     private void OnHaywire()
     {
-        Tweener.Instance.CancelTween(transform);
         Debug.Log("OnHaywire");
         haywire = true;
         haywireTimer = 10;
@@ -53,6 +52,9 @@ public class GhostAI : MonoBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+
         if (!isAlive)
         {
             Die();
@@ -85,13 +87,30 @@ public class GhostAI : MonoBehaviour
             Debug.Log($"{gameObject.name} is dead");
             if (isAlive)
             {
-                GetComponent<CircleCollider2D>().enabled = false;
-                GetComponent<AudioSource>().Play();
-                transform.localScale = Vector3.one * 0.5f;
-                isAlive = false;
-                haywire = false;
+                SetDeath();
             }
         }
+        else if (col.CompareTag("SuperPlayer"))
+        {
+            // die
+            Debug.Log($"{gameObject.name} is dead");
+            if (isAlive)
+            {
+                SetDeath();
+            }
+        }
+    }
+
+    private void SetDeath()
+    {
+        Tweener.Instance.CancelTween(transform);
+        GetComponent<SpriteRenderer>().color = haywireColor;
+
+        GetComponent<CircleCollider2D>().enabled = false;
+        GetComponent<AudioSource>().Play();
+        transform.localScale = Vector3.one * 0.5f;
+        isAlive = false;
+        haywire = false;
     }
 
     private void StopHaywire()

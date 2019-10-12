@@ -2,18 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Haywire : Collectable
+[CreateAssetMenu]
+public class Haywire : Powerup
 {
     public delegate void HaywireHandler();
     public static event HaywireHandler OnHaywire;
 
-    public override void OnTriggerEnter2D(Collider2D col)
+    public override void UsePowerup()
     {
-        if (col.CompareTag("Player"))
-        {
-            Debug.Log("test???");
-            OnHaywire?.Invoke();
-            base.OnTriggerEnter2D(col);
-        }
+        OnHaywire?.Invoke();
     }
 }

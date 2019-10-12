@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -14,13 +15,15 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject[] spawnablePowerups;
 
     private Camera mainCam;
-    [SerializeField] private Texture2D level;
+    [SerializeField] private Texture2D[] levels;
     [SerializeField] private GameObject wallObj;
     [SerializeField] private GameObject smallPelletObj;
     [SerializeField] private ColorGameObject[] ColorsToSpawn;
 
     private int spawnedPellets;
-    private bool levelContinue = false;
+
+    public delegate void LevelLoadHandler();
+    public static event LevelLoadHandler OnLevelLoad;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +36,13 @@ public class LevelManager : MonoBehaviour
 
     void GenerateLevel()
     {
+        Texture2D level;
+        if (SceneManager.GetActiveScene().name == "IterateLevel")
+            level = levels[Random.Range(0, levels.Length)];
+        else
+            level = levels[0];
+
+
         mainCam = Camera.main;
         mainCam.orthographicSize = (level.height / 2) + 1;
         mainCam.transform.position = new Vector3(level.width * 0.5f, (level.height * 0.5f) - 0.5f, -10);
@@ -55,8 +65,6 @@ public class LevelManager : MonoBehaviour
                 }
                 else
                 {
-                    if (levelContinue)
-                        continue;
                     for (int i = 0; i < ColorsToSpawn.Length; i++)
                     {
                         if (pixelColor == ColorsToSpawn[i].Color)
@@ -65,6 +73,7 @@ public class LevelManager : MonoBehaviour
                 }
             }
         }
+        OnLevelLoad?.Invoke();
         Grid.Instance.CreateGrid();
     }
 
@@ -76,12 +85,13 @@ public class LevelManager : MonoBehaviour
 
     private void RestartLevel()
     {
+        Destroy(GameObject.FindGameObjectWithTag("Player"));
+
         var levelParts = GameObject.FindGameObjectsWithTag("Level");
         for (int i = 0; i < levelParts.Length; i++)
         {
             Destroy(levelParts[i]);
         }
-        levelContinue = true;
         GenerateLevel();
     }
 

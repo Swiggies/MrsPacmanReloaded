@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 3047962772587797765}
   m_Layer: 0
   m_Name: PinkGhost
-  m_TagString: Untagged
+  m_TagString: Level
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -153,25 +153,25 @@ MonoBehaviour:
   nodes:
   - gridX: 0
     gridY: 0
-    IsWall: 0
+    NotWall: 0
     position: {x: 0, y: 0, z: 0}
     gCost: 0
     hCost: 0
   - gridX: 0
     gridY: 0
-    IsWall: 0
+    NotWall: 0
     position: {x: 0, y: 0, z: 0}
     gCost: 0
     hCost: 0
   - gridX: 0
     gridY: 0
-    IsWall: 0
+    NotWall: 0
     position: {x: 0, y: 0, z: 0}
     gCost: 0
     hCost: 0
   - gridX: 0
     gridY: 0
-    IsWall: 0
+    NotWall: 0
     position: {x: 0, y: 0, z: 0}
     gCost: 0
     hCost: 0

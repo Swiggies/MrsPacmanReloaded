@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4551308313687809763}
   - component: {fileID: 8453771134470258655}
   - component: {fileID: 1691920182780305936}
-  - component: {fileID: 6427503224131610780}
+  - component: {fileID: 716174588911837864}
   m_Layer: 0
   m_Name: Powerup
   m_TagString: Level
@@ -119,7 +119,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6427503224131610780
+--- !u!114 &716174588911837864
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,8 +128,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3181138191259633628}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ee11e411739a714bb4da6ff9e1024bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 33ecd9ab58c968f43b4c81f0e46731aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CollectableType: 1
   Score: 50
+  SelectedPowerup: {fileID: 0}
+  powerups:
+  - {fileID: 11400000, guid: a9b68fd5c25e06b44b91242884066495, type: 2}
+  - {fileID: 11400000, guid: e57b855b52684b2479ed0b08ae485c28, type: 2}

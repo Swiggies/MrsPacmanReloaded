@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
     public static int Score;
     public static bool GameStarted = false;
     public static int Lives = 3;
+    public static bool IterateLevel;
 
     public delegate void ScoreHandler();
     public static event ScoreHandler OnScoreChange;
@@ -35,6 +37,9 @@ public class GameManager : MonoBehaviour
         Collectable.OnCollectablePickup += OnCollectablePickup;
         GhostAI.OnDeath += OnGhostDeath;
         Invoke("StartGame", 3);
+
+        if (SceneManager.GetActiveScene().name == "IterateLevel")
+            IterateLevel = true;
     }
 
     public void StartGame()
