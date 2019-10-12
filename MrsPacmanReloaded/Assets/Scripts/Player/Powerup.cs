@@ -2,18 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Powerup : ScriptableObject
+public abstract class Powerup : ScriptableObject
 {
-    public string powerupName;
-    public string powerupDescription;
-    
-    public virtual void InitializePowerup()
+    public string PowerupName;
+    public bool Active;
+
+    public PlayerController PlayerController { get; private set; }
+
+    public delegate void PowerupUsedHandler();
+    public static event PowerupUsedHandler OnPowerupUse;
+
+    public virtual void InitializePowerup(PlayerController _playerController)
     {
-        Debug.Log("Powerup Initialized");
+        this.PlayerController = _playerController;
     }
 
-    public virtual void UsePowerup()
-    {
-        Debug.Log("Powerup Used");
-    }
+    public virtual void UsePowerup() { OnPowerupUse?.Invoke(); }
+
+    public virtual void PowerupUpdate() { }
+
+    public virtual void PowerupEnd() { }
 }
