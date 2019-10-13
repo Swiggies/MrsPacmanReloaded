@@ -112,6 +112,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CollectableType: 0
   Score: 10
+  SelectedPowerup: {fileID: 0}
+  powerups: []
 --- !u!50 &2495471598867092375
 Rigidbody2D:
   serializedVersion: 4
@@ -131,5 +133,5 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0

@@ -7,7 +7,7 @@ public class Tweener : MonoBehaviour
 {
     //private Tween activeTween;
     private List<Tween> activeTweens = new List<Tween>();
-    public static Tweener Instance;     
+    public static Tweener Instance;
 
     void Awake()
     {
@@ -27,14 +27,13 @@ public class Tweener : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         for (int i = 0; i < activeTweens.Count; i++)
         {
-            if (Vector3.Distance(activeTweens[i].Target.position, activeTweens[i].EndPos) > 0.1f)
+            if (Vector3.Distance(activeTweens[i].Target.position, activeTweens[i].EndPos) > 0.01f)
             {
                 float timeFraction = (Time.time - activeTweens[i].StartTime) / activeTweens[i].Duration;
-                //timeFraction = Mathf.Pow(timeFraction, 3);
                 activeTweens[i].Target.position = Vector3.Lerp(activeTweens[i].StartPos, activeTweens[i].EndPos, timeFraction);
             }
             else

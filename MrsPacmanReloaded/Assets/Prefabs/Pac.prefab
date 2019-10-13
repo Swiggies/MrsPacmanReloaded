@@ -131,8 +131,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21db0fa07c8893d48a34a3691af87589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetFPS: 60
-  speed: 0.25
+  Speed: 0.25
+  LockedDir: 0
+  targetFPS: 0
 --- !u!114 &1238718234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8187de9c0b2ecd74fbb57c16d278f760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDead: 0
+  IsDead: 0
   animator: {fileID: 6793733044984318825}
 --- !u!82 &1059835929656120454
 AudioSource:

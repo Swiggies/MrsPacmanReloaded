@@ -30,6 +30,12 @@ public class PinkGhost : GhostAI
         if (IsHaywiring || !IsAlive)
             return;
 
+        if (!nodes[currentlySelectedNode].NotWall)
+        {
+            var pos = nodes[currentlySelectedNode].position;
+            nodes[currentlySelectedNode] = GetFirstEmptyNodeInArea(pos, 3);
+        }
+
         // When the ghost reaches the end of its path, go to the next corner in the list
         if(Pathfinding.path.Count == 0 || Pathfinding.path[Pathfinding.path.Count-1] != nodes[currentlySelectedNode])
         {

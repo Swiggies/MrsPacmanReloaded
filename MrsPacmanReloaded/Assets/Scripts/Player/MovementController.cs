@@ -22,7 +22,8 @@ public class MovementController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Application.targetFrameRate = targetFPS;
+        if(targetFPS > 0)
+            Application.targetFrameRate = targetFPS;
         playerController = GetComponent<PlayerController>();
     }
 

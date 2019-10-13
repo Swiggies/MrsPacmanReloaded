@@ -35,10 +35,16 @@ public class Boost : Powerup
     // Stops boost if it hits anything
     public override void PowerupUpdate()
     {
-        base.PowerupUpdate();
-        RaycastHit2D hit = Physics2D.Raycast(movementController.transform.position, dir, 1, LayerMask.GetMask("Wall"));
-        if (hit)
+        if (dir == Vector2.zero)
             PowerupEnd();
+
+        RaycastHit2D hit = Physics2D.Raycast(movementController.transform.position, dir, 1, LayerMask.GetMask("Wall"));
+        Debug.DrawRay(movementController.transform.position, dir);
+        if (hit)
+        {
+            PowerupEnd();
+        }
+        base.PowerupUpdate();
     }
 
     // Called when the powerups ends

@@ -15,6 +15,7 @@ public class Haywire : Powerup
     // Calls the event and tells the PlayerController that the powerup has been used
     public override void PowerupUse()
     {
+        base.PowerupUse();
         OnHaywire?.Invoke();
         PowerupEnd();
     }

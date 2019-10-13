@@ -24,6 +24,9 @@ public class Pathfinding : MonoBehaviour
     // Don't completely understand it myself but I'll try my best
     public void FindPath(Vector3 startPos, Vector3 targetPos)
     {
+        if (grid == null)
+            return;
+
         Node startNode = grid.NodeFromWorldPosition(startPos);
         Node targetNode = grid.NodeFromWorldPosition(targetPos);
 
