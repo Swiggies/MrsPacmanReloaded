@@ -81,7 +81,7 @@ public class MovementController : MonoBehaviour
     private bool CheckCollision(Vector2 dir)
     {
 
-        RaycastHit2D hit = Physics2D.BoxCast(transform.position, new Vector2(0.9f, 0.9f), 0, dir, 0.1f);
+        RaycastHit2D hit = Physics2D.BoxCast(transform.position, new Vector2(0.9f, 0.9f), 0, dir, 0.1f, LayerMask.GetMask("Wall"));
         if(hit)
             return true;
 
