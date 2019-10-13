@@ -17,11 +17,11 @@ public class Collectable : MonoBehaviour
 
     private void Start()
     {
-        if (!GameManager.IterateLevel)
-            return;
-
-        if(CollectableType == CollectableTypes.Powerup)
+        if(CollectableType == CollectableTypes.Powerup && GameManager.IterateLevel)
             SelectedPowerup = powerups[Random.Range(0, powerups.Length)];
+
+        if (!GameManager.IterateLevel)
+            SelectedPowerup = powerups[0];
     }
 
     public virtual void OnTriggerEnter2D(Collider2D col)

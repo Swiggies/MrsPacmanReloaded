@@ -5,26 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagement : MonoBehaviour
 {
+
     public static SceneManagement Instance;
 
     void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
     }
 
-    void Start()
+    public void LoadScene(string scene)
     {
-        //GameManager.OnGameWin += OnGameWin;
-    }
-
-    private void OnGameWin()
-    {
-        //Invoke("RestartScene", 3);
-    }
-
-    public void RestartScene()
-    {
-        //var scene = SceneManager.GetActiveScene();
-        //SceneManager.LoadScene(scene.name);
+        SceneManager.LoadScene(scene);
     }
 }
