@@ -116,6 +116,11 @@ public class Grid : MonoBehaviour
         return neighboringNodes;
     }
 
+    public void SetPointToWall(Vector3 pos)
+    {
+        grid[(int)pos.x, (int)pos.y].NotWall = false;
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(GridWorldSize.x, GridWorldSize.y, 1));

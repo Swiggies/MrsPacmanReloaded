@@ -38,8 +38,11 @@ public class BlueGhost : GhostAI
             RaycastHit2D newHit = Physics2D.Raycast(transform.position, currentDir);
             if (newHit != false)
             {
-                if (newHit.collider.CompareTag("Player") && newHit.distance <= distance)
+                if (newHit.collider.CompareTag("Player"))
+                {
+                    Debug.Log("Blue ghost seen player");
                     GetNewPosition();
+                }
             }
         }
 

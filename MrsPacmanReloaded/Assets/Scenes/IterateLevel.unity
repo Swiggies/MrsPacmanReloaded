@@ -1042,25 +1042,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5def27505e0ac10478f075cd0714d187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneName: MainMenu
 --- !u!1 &877578920
 GameObject:
   m_ObjectHideFlags: 0
@@ -1099,6 +1080,8 @@ MonoBehaviour:
   - {fileID: 3181138191259633628, guid: b2f335995d2b1774fa56302757cc9c1f, type: 3}
   levels:
   - {fileID: 2800000, guid: 335c1a9bf9513d14091cfd2d9da63fd2, type: 3}
+  - {fileID: 2800000, guid: 429ecfb137880314a9953738f43841e2, type: 3}
+  - {fileID: 2800000, guid: 33fcc3f4de859414a9ec20bda451794d, type: 3}
   wallObj: {fileID: 7783498905016631963, guid: f66db0464256af845ba916f9b62a8368, type: 3}
   smallPelletObj: {fileID: 1873205074215712347, guid: b961cff630a3c254eb575fec4827ca05,
     type: 3}
@@ -1326,6 +1309,7 @@ MonoBehaviour:
   scoreText: {fileID: 2121524470}
   highScoreText: {fileID: 1863084282}
   livesText: {fileID: 1524441620}
+  powerupText: {fileID: 1392579604}
 --- !u!114 &941264231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3575,25 +3559,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5def27505e0ac10478f075cd0714d187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneName: MainMenu
 --- !u!1 &1917684245
 GameObject:
   m_ObjectHideFlags: 0
