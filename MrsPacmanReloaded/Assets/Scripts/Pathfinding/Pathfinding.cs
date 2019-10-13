@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//This handles pathfinding for individual ghosts
 public class Pathfinding : MonoBehaviour
 {
-    public Grid grid;
+    public AStarGrid grid;
 
     public List<Node> path = new List<Node>();
 
@@ -18,19 +20,26 @@ public class Pathfinding : MonoBehaviour
         //FindPath(StartPos.position, TargetPos.position);
     }
 
+    // Finds the path between the start pos and the target pos
+    // Don't completely understand it myself but I'll try my best
     public void FindPath(Vector3 startPos, Vector3 targetPos)
     {
         Node startNode = grid.NodeFromWorldPosition(startPos);
         Node targetNode = grid.NodeFromWorldPosition(targetPos);
 
+        // 2 lists, keeps track of nodes that are "open" and nodes that are "closed"
+        // Open nodes are the nodes that have been discovered but not been evaluated
+        // Closed nodes have bee evaluated
+        // Closed list is a HashSet which is similar to a list but doesn't hold any values
+        // Closed nodes will not have to be checked once added to the closed list
         List<Node> OpenList = new List<Node>();
         HashSet<Node> ClosedList = new HashSet<Node>();
 
         OpenList.Add(startNode);
-        //Debug.Log($"{startNode.gridX}:{startNode.gridY} / {targetNode.gridX}:{targetNode.gridY}");
 
         while (OpenList.Count > 0)
         {
+            // Evaluate the current set of open nodes
             Node currentNode = OpenList[0];
             for (int i = 0; i < OpenList.Count; i++)
             {
@@ -42,12 +51,17 @@ public class Pathfinding : MonoBehaviour
             OpenList.Remove(currentNode);
             ClosedList.Add(currentNode);
 
+            // If the current node is the target node
+            // Get the final path
             if(currentNode == targetNode)
             {
                 GetFinalPath(startNode, targetNode);
                 break;
             }
 
+            // Get all the neighbor nodes next to the current node
+            // Calculate their cost
+            // Add them to the open list if they are not a wall
             foreach (Node neighborNode in grid.GetNeighborNodes(currentNode))
             {
                 if (!neighborNode.NotWall || ClosedList.Contains(neighborNode))
@@ -70,6 +84,7 @@ public class Pathfinding : MonoBehaviour
 
     }
 
+    // Returns the final path to the current node
     void GetFinalPath(Node startNode, Node endNode)
     {
         List<Node> FinalPath = new List<Node>();
@@ -86,6 +101,7 @@ public class Pathfinding : MonoBehaviour
         path = FinalPath;
     }
 
+    // Returns the manhatten distance between 2 nodes
     int GetManhattenDistance(Node nodeA, Node nodeB)
     {
         int ix = Mathf.Abs(nodeA.gridX - nodeB.gridX);

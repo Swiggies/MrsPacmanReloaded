@@ -144,12 +144,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b614f48d21ddd944fbd90b68bc8120cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultColor: {r: 0, g: 0, b: 0, a: 0}
-  haywireColor: {r: 0.34117648, g: 0, b: 1, a: 1}
-  seeker: {fileID: 6148865766927921148}
-  pathfinding: {fileID: 0}
-  haywire: 0
-  isAlive: 1
+  DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+  HaywireColor: {r: 0.42352942, g: 0, b: 0.50980395, a: 1}
+  Seeker: {fileID: 6148865766927921148}
+  Pathfinding: {fileID: 0}
+  IsHaywiring: 0
+  IsAlive: 1
 --- !u!50 &6233826677582109872
 Rigidbody2D:
   serializedVersion: 4

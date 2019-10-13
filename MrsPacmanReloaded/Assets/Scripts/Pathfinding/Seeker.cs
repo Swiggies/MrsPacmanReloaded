@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// This class is an intermediate class between the GhostAI and the Pathfinding
 public class Seeker : MonoBehaviour
 {
     public Vector3 targetPos;
 
     Pathfinding pathfinding;
-
-    bool nextMove = true;
 
     // Start is called before the first frame update
     void Start()
@@ -17,14 +16,14 @@ public class Seeker : MonoBehaviour
     }
 
     // Update is called once per frame
+    // Every frame, if our target position is not null
+    // Find the path to the target position
     void Update()
     {
         if (targetPos == null)
             return;
 
         pathfinding.FindPath(transform.position, targetPos);
-        //if (pathfinding.path.Count > 0 && nextMove)
-        //    StartCoroutine(MoveTowards(pathfinding.path[0].position, .25f));
     }
 
     void OnDrawGizmos()

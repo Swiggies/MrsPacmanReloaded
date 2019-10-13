@@ -5,7 +5,6 @@ using UnityEngine;
 public class RedGhost : GhostAI
 {
 
-
     // Start is called before the first frame update
     public override void Start()
     {
@@ -13,17 +12,18 @@ public class RedGhost : GhostAI
     }
 
     // Update is called once per frame
+    // Red ghost is the most simple. Gets the position of the player and tries to move towards it using the A* algorithm
     public override void Update()
     {
         base.Update();
         if (!GameManager.GameStarted)
             return;
 
-        if (haywire || !isAlive)
+        if (IsHaywiring || !IsAlive)
             return;
 
-        seeker.targetPos = player.transform.position;
-        if (pathfinding.path.Count > 0)
-            Tweener.Instance.AddTween(transform, transform.position, pathfinding.path[0].position, speed);
+        Seeker.targetPos = player.transform.position;
+        if (Pathfinding.path.Count > 0)
+            Tweener.Instance.AddTween(transform, transform.position, Pathfinding.path[0].position, Speed);
     }
 }

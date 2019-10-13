@@ -74,7 +74,7 @@ public class LevelManager : MonoBehaviour
             }
         }
         OnLevelLoad?.Invoke();
-        Grid.Instance.CreateGrid();
+        AStarGrid.Instance.CreateGrid();
     }
 
     private void OnGameRestart(GameManager.GameStates state)

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    // Key used for animation
     private const string ANIM_DEAD = "Dead";
 
     public bool IsDead;
@@ -12,9 +13,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator animator;
     private Vector3 startPos;
     private Powerup currentPowerup;
-
+    private AudioSource audioSource;
+    private CircleCollider2D circleCollider;
 
     // Start is called before the first frame update
+    // Set up the player
     void Start()
     {
         startPos = transform.position;
@@ -23,8 +26,12 @@ public class PlayerController : MonoBehaviour
         Collectable.OnCollectablePickup += OnPowerupPickup;
         if(GameManager.IterateLevel)
             Powerup.OnPowerupEnd += OnPowerupEnd;
+
+        audioSource = GetComponent<AudioSource>();
+        circleCollider = GetComponent<CircleCollider2D>();
     }
 
+    // Unsubscribe from events when the player is killed
     private void OnDisable()
     {
         Powerup.OnPowerupEnd -= OnPowerupEnd;
@@ -32,12 +39,16 @@ public class PlayerController : MonoBehaviour
         GameManager.OnGameRestart -= OnGameRestart;
     }
 
+    // WHen the powerup used has ended
+    // Destroy it
     private void OnPowerupEnd()
     {
         //currentPowerup = null;
         Destroy(currentPowerup);
     }
 
+    // When a powerup is picked up
+    // Instantiate it and initialize it
     private void OnPowerupPickup(Collectable collectable)
     {
         if (!GameManager.IterateLevel)
@@ -50,8 +61,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // If the player presses space, use the current powerup
+    // If the powerup has an update loop, run that
     private void Update()
     {
+        if (!GameManager.IterateLevel)
+            return;
+
         if(currentPowerup != null)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -64,14 +80,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // When the game is restart
+    // Reset the position and animation of the player
     private void OnGameRestart(GameManager.GameStates state)
     {
         transform.position = startPos;
         IsDead = false;
         animator.SetBool(ANIM_DEAD, IsDead);
-        GetComponent<CircleCollider2D>().enabled = true;
+        circleCollider.enabled = true;
     }
 
+    // When the player is killed, run the animation, audio and disable any collisions so this isn't called multiple times
+    // Let the GameManager know the game has finished
     public void KillPlayer()
     {
         if (IsDead)
@@ -79,8 +99,8 @@ public class PlayerController : MonoBehaviour
 
         IsDead = true;
         animator.SetBool(ANIM_DEAD, IsDead);
-        GetComponent<AudioSource>().Play();
-        GetComponent<CircleCollider2D>().enabled = false;
+        audioSource.Play();
+        circleCollider.enabled = false;
         GameManager.Instance.EndGame();
     }
 }

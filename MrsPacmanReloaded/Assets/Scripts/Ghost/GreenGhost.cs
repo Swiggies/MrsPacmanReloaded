@@ -9,30 +9,37 @@ public class GreenGhost : GhostAI
     public override void Start()
     {
         base.Start();
-        seeker.targetPos = GetRandomNodeInArea(Vector3.zero, (int)Grid.Instance.GridWorldSize.x, (int)Grid.Instance.GridWorldSize.y).position;
+        Seeker.targetPos = GetRandomNodeInArea(Vector3.zero, (int)AStarGrid.Instance.GridWorldSize.x, (int)AStarGrid.Instance.GridWorldSize.y).position;
     }
 
     // Update is called once per frame
+    // Green ghost is supposed to move randomly at every junction
+    // Due to my grids and levels being procedural I cannot define where a junction is easily
+    // I instead opted to  make the green ghost move randomly and move randomly every time it hits a wall infront of it
+    // These tend to be junctions anything due to the labyrynth nature of PacMan
     public override void Update()
     {
         base.Update();
         if (!GameManager.GameStarted)
             return;
 
-        if (haywire || !isAlive)
+        if (IsHaywiring || !IsAlive)
             return;
 
+        // Get the direction that the ghost is moving in
         var newDir = Vector2.zero;
-        if (pathfinding.path.Count > 0)
-            newDir = (pathfinding.path[0].position - transform.position).normalized;
+        if (Pathfinding.path.Count > 0)
+            newDir = (Pathfinding.path[0].position - transform.position).normalized;
 
+        // Raycast in the direction the ghost is moving in
+        // If it hits anything, find a new path to go in
         RaycastHit2D newHit = Physics2D.Raycast(transform.position, newDir, 1.5f);
         if (newHit || newDir == Vector2.zero)
         {
-            seeker.targetPos = GetRandomNodeInArea(Vector3.zero, (int)Grid.Instance.GridWorldSize.x, (int)Grid.Instance.GridWorldSize.y).position;
+            Seeker.targetPos = GetRandomNodeInArea(Vector3.zero, (int)AStarGrid.Instance.GridWorldSize.x, (int)AStarGrid.Instance.GridWorldSize.y).position;
         }
 
-        if (pathfinding.path.Count > 0)
-            Tweener.Instance.AddTween(transform, transform.position, pathfinding.path[0].position, speed);
+        if (Pathfinding.path.Count > 0)
+            Tweener.Instance.AddTween(transform, transform.position, Pathfinding.path[0].position, Speed);
     }
 }
