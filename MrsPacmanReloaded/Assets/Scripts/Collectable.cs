@@ -22,11 +22,14 @@ public class Collectable : MonoBehaviour
     // Setup the collectable
     private void Start()
     {
-        if(CollectableType == CollectableTypes.Powerup && GameManager.IterateLevel)
-            SelectedPowerup = powerups[Random.Range(0, powerups.Length)];
+        if (CollectableType == CollectableTypes.Powerup)
+        {
 
-        if (!GameManager.IterateLevel)
-            SelectedPowerup = powerups[0];
+            if (!GameManager.IterateLevel)
+                SelectedPowerup = powerups[0];
+            else
+                SelectedPowerup = powerups[Random.Range(0, powerups.Length)];
+        }
     }
 
     // Collision handling
