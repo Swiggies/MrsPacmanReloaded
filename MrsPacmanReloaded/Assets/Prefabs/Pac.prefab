@@ -148,6 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsDead: 0
   animator: {fileID: 6793733044984318825}
+  usePowerupClip: {fileID: 8300000, guid: 30444b45975cccb4e84d9337b56c83b8, type: 3}
 --- !u!82 &1059835929656120454
 AudioSource:
   m_ObjectHideFlags: 0
@@ -160,7 +161,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 2ba09c76100d3694d8207c15b0d1965c, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public MovementController PlayerMovementController { get; private set; }
 
     [SerializeField] private Animator animator;
+    [SerializeField] private AudioClip usePowerupClip;   
     private Vector3 startPos;
     private Powerup currentPowerup;
     private AudioSource audioSource;
@@ -73,6 +74,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 currentPowerup.PowerupUse();
+                audioSource.PlayOneShot(usePowerupClip);
             }
 
             if (currentPowerup.Active)
